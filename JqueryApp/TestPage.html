@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.4.1.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <!--<img id="=ajax-loader"
+             src="ajax-loading.gif" style="display:none;width:100px;" />
+        <hr />-->
+        <div id="results" class="alert alert-success" style="display:none">
+            <h3> Bilgileriniz kayıt edildi. Katılımcılar :</h3>
+            <h4>
+                <span id="GetAttendees"></span>
+            </h4>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h4>Sende Davetlisin!</h4></div>
+                    <div class="panel-body">
+                        <form id="InviteForm">
+                            <div class="form-group">
+                                <label>Ad :</label>
+                                <input type="text" id="Name" name="Name" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mail :</label>
+                                <input type="email" id="Mail" name="Mail" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Katılma durumun :</label>
+                                <select class="form-control" id="Status" name="Status">
+                                    <option>Partiye Katılıyor musunuz ?</option>
+                                    <option value="True">Evet,Geliyorum</option>
+                                    <option value="False">Malesef,Katılamıyorum</option>
+                                </select>
+                            </div>
+                            <div class="text-center">
+                                <input class="btn btn-success" type="submit" value="Gönder" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function GetAttendees() {
+            
+            var html = [];
+            $.getJSON("https://localhost:44332/api/Invite/GetAttendees", function (data) {
+                $.each(data, function (key, value) {
+                    html.push("<label class='label label-success'>" + value.Name + "</label> ")
+                    
+                });
+                $("#GetAttendees").empty().append(html);
+            });
+
+        }
+        $('#InviteForm').submit(function (event) {
+            event.preventDefault();
+            let email = $("#Mail").val();
+            let name = $("#Name").val();
+            let status = $("#Status").val();
+            $.ajax({
+                url: "https://localhost:44332/api/Invite/Postadd", 
+                data: { 
+                   
+                    Mail: email,
+                    Name: name,
+                    Status: status,
+                },
+                type: "post",
+                //beforeSend: function () {
+                //    $('#ajax-loader').show();
+                //},
+                //complete: function () {
+                //    $('#ajax-loader').hide;
+                //},
+                success: function () {
+                    if (status == "True") {
+                        GetAttendees();
+                    }
+                    $('#results').show();
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿@model BirthDayAppWithWebApi.Models.InvitationModel
+@{
+    ViewBag.Title = "Teşekkür";
+}
+
+<h1>Teşekkürler,@Model.Name</h1>
+
+<div class="lead">
+    @if (Model.Status == true)
+    {
+        @:Gelmene Çok Sevindim :) Butün hazırlıklar tamamlandı !
+        @Html.Action("Attendees", "Home")
+    }
+    else
+    {
+
+        @:Gelemeyecek olmana çok üzüldüm :( Bunu bildirdigin için çok teşekkür ederim.
+    }
+</div>

@@ -1,0 +1,35 @@
+﻿@model BirthDayAppWithWebApi.Models.InvitationModel
+@{
+    ViewBag.Title = "InvitationPage";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading"><h4>Sende Davetlisin!</h4></div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <label>Ad :</label>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Mail :</label>
+                @Html.TextBoxFor(x => x.Mail, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Katılma durumun :</label>
+                @Html.DropDownListFor(x => x.Status, new[]{
+                new SelectListItem() {Text="Evet Geliyorum",
+                Value=bool.TrueString },
+                new SelectListItem() { Text = "Malesef katılım sağlayamıyorum" ,
+                Value = bool.FalseString}
+                }, "Geliyor musun ?", new { @class = "form-control" })
+            </div>
+            <div class="text-center">
+                <input class="btn btn-success" type="submit" value="Gönder" />
+            </div>
+        }
+    </div>
+</div>

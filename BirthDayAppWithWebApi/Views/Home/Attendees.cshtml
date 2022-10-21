@@ -1,0 +1,16 @@
+﻿@model IEnumerable<BirthDayAppWithWebApi.Models.InvitationModel>
+@if (Model.Count() == 1)
+{
+    <p>Partiye gelen ilk kişi sensin :)</p>
+}
+else
+{
+    <hr />
+    <p>
+        @foreach (var item in Model)
+        {
+            <label class="label label-success">@item.Name</label>
+        }
+    </p>
+}
+
